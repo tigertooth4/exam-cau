@@ -1,0 +1,191 @@
+%% xetex
+%% version: 0.20
+%% by Xiaojun Liu
+
+\documentclass[zihao=-4,twoside]{ctexart} % 默认小四号字体
+\usepackage{amsmath, amsthm, amssymb,amsfonts} 
+\usepackage[top=20mm,bottom=20mm,left=20mm,right=20mm]{geometry}
+\usepackage{setspace}
+\usepackage{fontspec}
+
+\usepackage{xparse}
+\usepackage{array} % 提供 w{} 列类型}
+\usepackage{graphicx,color}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{bm}
+
+\setmainfont{Times New Roman} % 设置 英文 字体 
+\setCJKmainfont[BoldFont=华文中宋]{STSong} % 设置 中文 字体
+\setCJKsansfont{华文黑体}
+\setCJKmonofont{STBaoliSC-Regular}
+\newCJKfontfamily\HeiTi{黑体-简} % 黑体
+
+
+\newcommand{\mb}{\mathbb}
+\newcommand{\mc}{\mathcal}   
+\newcommand{\Lim}{\lim\limits}
+\newcommand{\Sum}{\sum\limits}
+\newcommand{\Liminf}{\liminf\limits}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\vphi}{\varphi}
+%\newcommand{\txtfont}{\fontspec[ExternalLocation=/Users/lxj/Dropbox/Resources/字体/]{xjlFont.fon}}
+\newcommand{\txtcolor}{\color{MyDarkBlue}}
+\newcommand{\red}{\color{BrickRed}}
+\newcommand{\scoresNoReturn}[1]{\rightline{\fontspec{STHeiti}\red({#1} 分)}}
+\newcommand{\scores}[1]{{\newline\rightline{\fontspec{STHeiti}\red({#1} 分)}}}
+\newcommand{\scoresIn}[1]{{\quad\quad\quad\quad\fontspec{STHeiti}\red ({#1} 分)}}
+\newcommand{\blank}{$\underline{\quad\quad\quad\quad}$}
+\newcommand{\dd}{\mathrm{d}}
+\DeclareMathOperator{\divergence}{\bf div}
+\DeclareMathOperator{\rot}{\bf rot}
+\definecolor{MyDarkBlue}{rgb}{0,0.08,0.65}
+\definecolor{BrickRed}{rgb}{0.8,0,0}
+
+\newcommand{\subject}{模拟课程}
+
+\setlength\parindent{0mm}
+\AtEndDocument{\label{LastPage}}
+\onehalfspacing
+
+\pagestyle{fancy}
+\fancyhead{} 
+
+\fancyhead[LE]{
+  {学院：\underline{\qquad\qquad\qquad\quad}
+  班级：\underline{\qquad\qquad\qquad\quad}
+  学号：\underline{\qquad\qquad\qquad\qquad}
+  姓名：\underline{\qquad\qquad\qquad\quad}}}
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt}
+
+\fancyfoot[C]{
+    \footnotesize % 小号字体
+    第~\thepage~页~共~\pageref{LastPage}~页~~~\subject~~~中国农业大学制 
+}  
+
+\begin{document}
+%% 标题
+\begin{center}
+  {\zihao{2}\tt 中国农业大学}\\ \vspace{2mm} 
+  {\zihao{2} 2023～2024 {\zihao{2} \tt 学年春季学期}}\\ \vspace{2mm} 
+  {\zihao{2} \tt \underline{~~\subject~~} 课程考试试题}
+\end{center}
+
+%% 得分表 
+\zihao{4}{
+  \centerline{
+  %\renewcommand{\arraystretch}{1.5} % 行高为默认 1.5 倍
+  \begin{tabular}[c]{|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|w{c}{10mm}|} 
+  \hline
+  ~~题号~~  & 一 & 二 & 三 & 四 & 五 & 六 & 七 & 八  & 总分\vphantom{$\Big|$}\\
+  \hline
+  ~分数~~ & \vphantom{$\bigg|$}   &    &    &    &    &    &    &    &   \\
+  \hline
+  \end{tabular}}
+} 
+
+
+\begin{center}\zihao{4}
+    （本试卷共 8 道大题）\\ 
+    \vspace{0.5em} %spacing 
+    \textbf{考生诚信承诺}
+\end{center}
+\vspace{-1em} 
+{\zihao{4}
+本人承诺自觉遵守考试纪律，诚信应考，服从监考人员管理。\\ 
+本人清楚学校考试考场规则，如有违纪行为，将按照学校违纪处分规定严肃处理。\\ }
+
+%% 考试试题正文
+\zihao{-4}
+
+
+\textsf{一、 填空题（共24分,每题3分）}
+    \begin{enumerate}
+    \item [1.] $\Lim_{x\to 0}(\cos x)^{1/x^2}=$\underline{\quad\quad\quad\quad}
+      \vspace{0.2in}
+
+    \item [2.] 当 $p>0$ 时, $x^3+px+q=0$ 有\underline{\quad\quad\quad\quad}个实根
+      \vspace{0.2in}
+      
+    \item [3.] 当 $x\to+\infty$ 时, 试将下述无穷大量按由低阶至高阶的顺序排列:\par
+      $e^x, \, x^x,\, x^{100},\,x^{99}(\ln x)^{100},\,
+      [x]!$ \underline{\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad}
+      \vspace{0.2in}
+
+    \item [4.] $\int_0^\pi \cos^2 x dx =$ \underline{\quad\quad\quad\quad}
+      \vspace{0.2in}
+
+    \item [5.]
+      $\left.\frac{d}{dx}\right|_{x=1}\frac{\sqrt{x}}{1+2x}=$\underline{\quad\quad\quad\quad}
+      \vspace{0.2in}
+
+    \item [6.] 求 $\Liminf_{n\to\infty}D(\frac1{\sqrt
+        {n+1}})=$\underline{\quad\quad\quad\quad}, 其中 $D(x)$ 为 Dirichlet 函数,
+      即
+      $$D(x)=
+      \begin{cases}
+        1 & x\in \mathbb{Q}\\
+        0 & x\not\in \mathbb{Q}
+      \end{cases}.
+      $$
+      \vspace{0.2in}
+
+    \item [7.] 求 $\frac{d^n}{dx^n}(x^2e^x)=$\underline{\quad\quad\quad\quad\quad\quad\quad\quad},
+      ($n\in\mathbb{N}$,化简所得结果)
+      \vspace{0.2in}
+ 
+    \item [8.] 下列关于一致连续的说法中,正确的有多少个?\underline{\quad\quad\quad\quad}
+      \begin{enumerate}
+      \item 若$f(x)$在$(a,b)$连续,则对充分小的$\delta>0$,$f(x)$在
+        $[a+\delta,b-\delta]$上一致连续
+      \item 若$f(x)$在$(a,b)$连续,则在$(a,b)$上有界
+      \item 若$f(x)$在$(a,b)$上一致连续,则在$(a,b)$上有界
+      \item $\ln(x)$在$(1,+\infty)$上一致连续
+      \item 某区间上两个一致连续的函数之和一定一致连续
+      \end{enumerate}
+      (注: $a,b$ 均为有限值)
+    \end{enumerate}
+
+\textsf{二、计算题 (共24分,每题6分)}
+    \begin{enumerate}
+    \item [1.] $$\int \cos^2(x)\sin(x)dx$$ \vspace{2.5in}
+    \item [2.] $$\int \frac x{\sqrt{1-x^2}}dx$$ \vspace{2.5in}
+    \item [3.] $$\int \frac {-x^4+x^3-x^2-x-2}{(x^2+1)^2(x-1)}dx$$ \vspace{4in}
+    \item [4.] $$\int \sin(\ln x)dx$$\vspace{1.5in}
+    \end{enumerate}
+
+\newpage
+
+\textsf{三、 (6分)} 求 $a,b$, 使
+    $$f(x)=
+    \begin{cases}
+      ax+b & x>1\\
+      x^2-3x+2 & x\le 1
+    \end{cases}
+    $$
+    为可微函数.
+    \vspace{3in}
+
+\textsf{四、 (6分)} 对于$\mathbb{R}$上有定义的函数, 若所论的导函数存在, 证明:
+    奇函数的导函数一定是偶函数.  \vspace{2in} \newpage
+
+\textsf{五、(10分)} 求过曲线 $$x^{2n}+y^{2n}=1$$ 上 $(x_0,y_0)$ 点的切线方
+    程(其中 $n$ 为自然数, $y_0\neq0$). 并证明当 $n\to+\infty$ 时, 除有限个点外,
+    $y'(x)$ 要么趋于 $0$, 要么趋于 $\infty$. (注: 实际上随着 $n$ 的增加, 曲线越
+    来越接近于正方形)  \vspace{3in}
+
+\textsf{六、(10分)} 设 $a<b$, $f(x)$ 在 $(-\infty,b)$ 和 $(a,+\infty)$ 均
+    一致连续, 证明 $f(x)$ 在 $(-\infty,+\infty)$ 上也一致连续.
+    \vspace{2in} \newpage
+
+\textsf{七、(10分)} 设 $f(x)$ 在 $\mathbb{R}$ 上连续, $f(1)>0$, 且
+    $\Lim_{x\to\pm\infty}f(x)=0$, 证明 $f(x)$ 在 $\mathbb{R}$ 上有最大值.
+    \vspace{3in}
+
+\textsf{八、 (10分)} 用 Bolzano-Weierstrass 定理证明有界闭区间上的连续函数一定有
+    界.\vspace{2in}
+    
+\end{document}
+
+
