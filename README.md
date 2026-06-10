@@ -40,7 +40,7 @@
 
 你只需要在主文档（`.tex`）的 `\documentclass` 可选参数中传入你当前的操作系统标签即可：
 
-````latex
+```latex
 % MacOS 用户操作方式
 \documentclass[macos]{exam-cau}
 
@@ -49,17 +49,17 @@
 
 % Linux 用户操作方式
 \documentclass[linux]{exam-cau}
+```
 
 ⚠️ **注意：** 若在 `\documentclass` 中不填写任何参数，模板默认会降级或依据配置适配（源码中默认内置为 `windows` 字体内置，可根据具体环境自定修改）。
 
 ### 📄 各系统字体映射细则
 
-* **西文字体（全平台统一）：** `Times New Roman`
-* **中文字体映射表：**
-* **`macos`：** 默认宋体 `STSong`（粗体采用 `华文中宋`），等宽 `STBaoliSC-Regular`，无衬线 `华文黑体`。
-* **`windows`：** 默认中文字体 `SimSun`（宋体，粗体采用 `SimHei` 黑体），等宽 `LiSu`（隶书），无衬线 `SimHei`（黑体）。
-* **`linux`：** 默认中文字体 `AR PL UMing CN`（文泉驿正黑/楷体系统）。
-
+- **西文字体（全平台统一）：** `Times New Roman`
+- **中文字体映射表：**
+- **`macos`：** 默认宋体 `STSong`（粗体采用 `华文中宋`），等宽 `STBaoliSC-Regular`，无衬线 `华文黑体`。
+- **`windows`：** 默认中文字体 `SimSun`（宋体，粗体采用 `SimHei` 黑体），等宽 `LiSu`（隶书），无衬线 `SimHei`（黑体）。
+- **`linux`：** 默认中文字体 `AR PL UMing CN`（文泉驿正黑/楷体系统）。
 
 ---
 
@@ -69,16 +69,17 @@
 
 ### 💡 开关命令速查表
 
-| 触发命令（写在文档序言区） | 对应底层开关 | 默认状态 | 功能描述 |
-| --- | --- | --- | --- |
-| **`\includeTable`** | `\@showproblemtabletrue` | ❌ 隐藏 | **开启**试卷头部的“题号-得分”大总分表格 |
-| **`\includeAnswer`** | `\@showanswertrue` | ❌ 隐藏 | **开启**参考答案环境的渲染（变为红蓝排版模式） |
-| **`\includeNotice`** | `\@shownoticetrue` | ❌ 隐藏 | **开启**考场注意事项说明及 100 分钟考试时长提示 |
-| **`\includeProblemCount`** | `\@showproblemcounttrue` | ❌ 隐藏 | **开启**“（本试卷共 X 道大题）”的自动化数量提示 |
+| 触发命令（写在文档序言区） | 对应底层开关             | 默认状态 | 功能描述                                        |
+| -------------------------- | ------------------------ | -------- | ----------------------------------------------- |
+| **`\includeTable`**        | `\@showproblemtabletrue` | ❌ 隐藏  | **开启**试卷头部的“题号-得分”大总分表格         |
+| **`\includeAnswer`**       | `\@showanswertrue`       | ❌ 隐藏  | **开启**参考答案环境的渲染（变为红蓝排版模式）  |
+| **`\includeNotice`**       | `\@shownoticetrue`       | ❌ 隐藏  | **开启**考场注意事项说明及 100 分钟考试时长提示 |
+| **`\includeProblemCount`** | `\@showproblemcounttrue` | ❌ 隐藏  | **开启**“（本试卷共 X 道大题）”的自动化数量提示 |
 
 ### 🛠️ 组合使用方法场景示例
 
-* **场景 A：生成学生打印版试卷（纯净版）**
+- **场景 A：生成学生打印版试卷（纯净版）**
+
 ```latex
 \documentclass[windows]{exam-cau}
 \includeTable         % 需要总评分表
@@ -88,7 +89,7 @@
 \begin{document}
 ...
 
-````
+```
 
 - **场景 B：生成教师/助教阅卷参考答案版（彩版）**
 
