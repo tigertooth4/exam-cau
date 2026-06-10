@@ -258,14 +258,14 @@
       % 显示公式或 align 环境中
       \ifx\@currenvir\@score@align@env
         % 在 align 环境中，使用 \tag*
-        \tag*{\textcolor{red}{( #1 分)}}
+        \tag*{\textcolor{red}{\textsf{ ( #1 分)}}}
       \else
         % 普通 $$...$$ 公式中
-        \tag*{\textcolor{red}{( #1 分)}}
+        \tag*{\textcolor{red}{\textsf{ ( #1 分)}}}
       \fi
     \else
       % 文本模式下靠右对齐
-      \hfill \textcolor{red}{( #1 分)}%
+      \hfill \textcolor{red}{\textsf{ ( #1 分)}}%
     \fi
   \fi
 }
