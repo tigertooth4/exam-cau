@@ -1,404 +1,342 @@
 # 📄 `exam-cau.cls` 使用说明书
 
-> 中国农业大学考试试卷模板
->
+> **中国农业大学考试试卷 LaTeX 模板（China Agricultural University Exam Template）**
+> 本模板专为高校教师与助教设计，具有高度的可读性、灵活性与规范性，完美契合期中、期末考试及模拟试题等排版场景。
 
-本模板 `exam-cau.cls` 是为中国农业大学设计的 LaTeX 考试试卷排版类文件。支持：
-
-- 多平台字体自动适配（MacOS / Windows / Linux）
-- 题目编号与表格自动生成
-- 答案显示控制（开关式）
-- 自定义年份、科目、学期信息
-- 支持选择题、填空题、计算题等常见题型
-- 支持在参考答案中设置各部分的分值 (New!)
+本模板 `exam-cau.cls` 基于 LaTeX3 (`ExplSyntax`) 与 LaTeX2e 混合架构开发。它能够帮助你通过结构化的方式快速录入题目，并自动处理试卷头部信息、考生诚信承诺栏、大题总分表、题号中文转换以及复杂的公式/文本分值标记。
 
 ---
 
-## ⚙️ 1. 使用前提条件
+## 🚀 1. 新版核心功能特点
 
-### ✅ 必须安装的宏包（建议使用 TeX Live 或 MiKTeX）
-
-```latex
-xcolor, environ,
-amsmath, amsthm, amssymb, amsfonts,
-fontspec, graphicx, color, setspace,
-fancyhdr, float, bm, xparse, array, etoolbox
-
-```
-
-> ✅ 编译方式推荐：XeLaTeX
->
+* **✨ 自动化题号与总分表：** 录入题目时只需使用 `\problem` 命令，模板会自动将题号转换为中文数字（如“一、”、“二、”），并根据录入的大题数量**动态生成**试卷顶部的得分表格。
+* **✨ 完备的试卷元素控制：** 提供了针对“总评分表”、“大题总数提示”、“考场注意事项”以及“参考答案”的全局独立开关，真正做到“一份源文件，既出试卷，又出答案”。
+* **✨ 智能分值标记 (`\score`)：** 升级后的评分命令不仅支持普通文本随文右对齐，还完美兼容数学单行公式 `$$...$$`、`equation` 以及多行行间公式 `align`、`align*` 等 AMS 宏包环境，自动实现公式右侧对齐。
+* **✨ 规范的试卷版面：** 严格按照中国农业大学规范，自动生成包含“学院、班级、学号、姓名”的页眉，以及包含“第 X 页 共 Y 页、科目名、中国农业大学制”的精美页脚。
+* **✨ 自动化格式悬挂：** 针对大题标题自动启用悬挂缩进（从第二行开始缩进 `2.5em`），确保长标题排版整齐美观。
 
 ---
 
-## 🧱 2. 类选项说明（可选参数）
+## 📦 2. 依赖宏包列表
 
-在 `\documentclass` 中可以传入以下操作系统选项以适配不同系统下的中文字体：
+本模板基于标准中文字体文档类 `ctexart` 封装（默认字号 `\zihao{-4}`，A4 纸张，双面打印布局）。编译时**建议使用 XeLaTeX** 引擎，确保能够正确调用系统字体并精准计算交叉引用。
 
-| 参数 | 含义 |
-| --- | --- |
-| `macos` | 使用 MacOS 字体（默认） |
-| `windows` | 使用 Windows 常见中文字体（如宋体、黑体） |
-| `linux` | 使用 Linux 下常见字体（如文泉驿正黑） |
+类文件内部已经默认预加载了以下核心排版宏包，用户无需在主文件中重复引入：
 
-示例：
+| 宏包分类 | 包含的具体宏包 | 功能说明 |
+| :--- | :--- | :--- |
+| **数学基础** | `amsmath`, `amsthm`, `amssymb`, `amsfonts`, `bm` | 提供了全套 AMS 数学公式环境、定理环境、数学粗体等 |
+| **页面与版式**| `geometry`, `setspace`, `fancyhdr`, `lastpage` | 控制 20mm 边距、1.5 倍行距、规范页眉页脚及尾页码计算 |
+| **图表与颜色**| `graphicx`, `color`, `xcolor`, `array` | 提供插图支持、高度自定色域（如答案红/蓝色）及增强表格 |
+| **底层内核** | `xparse`, `etoolbox`, `float`, `environ` | 支撑 LaTeX3 语法解析、环境捕获及宏包底层补丁修补 |
+
+---
+
+## 💻 3. 跨操作系统字体适配与操作方式
+
+为了防止在不同操作系统下编译时因缺少特定中文字体而报错，本模板提供了**多平台字体自动适配功能**。
+
+### 🛠️ 操作方式
+你只需要在主文档（`.tex`）的 `\documentclass` 可选参数中传入你当前的操作系统标签即可：
 
 ```latex
+% MacOS 用户操作方式
 \documentclass[macos]{exam-cau}
 
-```
+% Windows 用户操作方式
+\documentclass[windows]{exam-cau}
 
-> ⚠️ 如果不指定，默认为 macos，可根据需要修改 .cls 文件中的默认值。
->
+% Linux 用户操作方式
+\documentclass[linux]{exam-cau}
 
----
+好的，我为你全面更新了 `README.md` 说明书。
 
-## 📌 3. 主要命令说明
+根据 `exam-cau.cls` 的最新源码以及 `example-full.tex` 中的实际用法，本次更新不仅重构了原有的架构，还**特别补充了你要求的 5 大核心升级点**（包含新增的全局开关、全面的小题数量适配、更丰富的 `\score` 多环境代码样例以及多系统编译细节）。
 
-### 🔹 设置考试基本信息
-
-| 命令 | 功能 | 示例 |
-| --- | --- | --- |
-| `\setyear{<年份>}` | 设置考试年份 | `\setyear{2025}` |
-| `\setsubject{<科目名>}` | 设置考试科目 | `\setsubject{高等数学}` |
-| `\setsemester{<学期>}` | 设置考试学期 | `\setsemester{春季学期}` |
+以下是修改后的完整 `README.md` 文件内容：
 
 ---
 
-### 🔹 控制答案是否显示（调试/打印用）
+```markdown
+# 📄 `exam-cau.cls` 使用说明书
 
-| 命令 | 功能 | 示例 |
-| --- | --- | --- |
-| `\includeanswertrue` | 显示答案 | `\includeanswertrue` |
-| `\includeanswerfalse` | 不显示答案（默认） | `\includeanswerfalse` |
+> **中国农业大学考试试卷 LaTeX 模板（China Agricultural University Exam Template）**
+> 本模板专为高校教师与助教设计，具有高度的可读性、灵活性与规范性，完美契合期中、期末考试及模拟试题等排版场景。
+
+本模板 `exam-cau.cls` 基于 LaTeX3 (`ExplSyntax`) 与 LaTeX2e 混合架构开发。它能够帮助你通过结构化的方式快速录入题目，并自动处理试卷头部信息、考生诚信承诺栏、大题总分表、题号中文转换以及复杂的公式/文本分值标记。
 
 ---
 
-### 🔹 添加题目内容
+## 🚀 1. 新版核心功能特点
+
+* **✨ 自动化题号与总分表：** 录入题目时只需使用 `\problem` 命令，模板会自动将题号转换为中文数字（如“一、”、“二、”），并根据录入的大题数量**动态生成**试卷顶部的得分表格。
+* **✨ 完备的试卷元素控制：** 提供了针对“总评分表”、“大题总数提示”、“考场注意事项”以及“参考答案”的全局独立开关，真正做到“一份源文件，既出试卷，又出答案”。
+* **✨ 智能分值标记 (`\score`)：** 升级后的评分命令不仅支持普通文本随文右对齐，还完美兼容数学单行公式 `$$...$$`、`equation` 以及多行行间公式 `align`、`align*` 等 AMS 宏包环境，自动实现公式右侧对齐。
+* **✨ 规范的试卷版面：** 严格按照中国农业大学规范，自动生成包含“学院、班级、学号、姓名”的页眉，以及包含“第 X 页 共 Y 页、科目名、中国农业大学制”的精美页脚。
+* **✨ 自动化格式悬挂：** 针对大题标题自动启用悬挂缩进（从第二行开始缩进 `2.5em`），确保长标题排版整齐美观。
+
+---
+
+## 📦 2. 依赖宏包列表
+
+本模板基于标准中文字体文档类 `ctexart` 封装（默认字号 `\zihao{-4}`，A4 纸张，双面打印布局）。编译时**建议使用 XeLaTeX** 引擎，确保能够正确调用系统字体并精准计算交叉引用。
+
+类文件内部已经默认预加载了以下核心排版宏包，用户无需在主文件中重复引入：
+
+| 宏包分类 | 包含的具体宏包 | 功能说明 |
+| :--- | :--- | :--- |
+| **数学基础** | `amsmath`, `amsthm`, `amssymb`, `amsfonts`, `bm` | 提供了全套 AMS 数学公式环境、定理环境、数学粗体等 |
+| **页面与版式**| `geometry`, `setspace`, `fancyhdr`, `lastpage` | 控制 20mm 边距、1.5 倍行距、规范页眉页脚及尾页码计算 |
+| **图表与颜色**| `graphicx`, `color`, `xcolor`, `array` | 提供插图支持、高度自定色域（如答案红/蓝色）及增强表格 |
+| **底层内核** | `xparse`, `etoolbox`, `float`, `environ` | 支撑 LaTeX3 语法解析、环境捕获及宏包底层补丁修补 |
+
+---
+
+## 💻 3. 跨操作系统字体适配与操作方式
+
+为了防止在不同操作系统下编译时因缺少特定中文字体而报错，本模板提供了**多平台字体自动适配功能**。
+
+### 🛠️ 操作方式
+你只需要在主文档（`.tex`）的 `\documentclass` 可选参数中传入你当前的操作系统标签即可：
 
 ```latex
-\problem{<分数>}{<题型标题>}{<题目内容>}
+% MacOS 用户操作方式
+\documentclass[macos]{exam-cau}
+
+% Windows 用户操作方式
+\documentclass[windows]{exam-cau}
+
+% Linux 用户操作方式
+\documentclass[linux]{exam-cau}
 
 ```
 
-- `<分数>`：每道大题的总分
-- `<题型标题>`：如“选择题”、“填空题”、“计算题”
-- `<题目内容>`：具体题目正文，可包含 `enumerate` 列表、公式环境等
+> ⚠️ **注意：** 若在 `\documentclass` 中不填写任何参数，模板默认会降级或依据配置适配（源码中默认内置为 `windows` 字体内置，可根据具体环境自定修改）。
 
-✅ 示例：
+### 📄 各系统字体映射细则
+
+* **西文字体（全平台统一）：** `Times New Roman`
+* **中文字体映射表：**
+* **`macos`：** 默认宋体 `STSong`（粗体采用 `华文中宋`），等宽 `STBaoliSC-Regular`，无衬线 `华文黑体`。
+* **`windows`：** 默认中文字体 `SimSun`（宋体，粗体采用 `SimHei` 黑体），等宽 `LiSu`（隶书），无衬线 `SimHei`（黑体）。
+* **`linux`：** 默认中文字体 `AR PL UMing CN`（文泉驿正黑/楷体系统）。
+
+
+
+---
+
+## ⚙️ 4. 全局控制开关与使用方法
+
+模板内置了 4 个强大的布尔开关命令，可以直接放置在主文档的 `\begin{document}` 之前，用于灵活控制试卷的版面输出元素。
+
+### 💡 开关命令速查表
+
+| 触发命令（写在文档序言区） | 对应底层开关 | 默认状态 | 功能描述 |
+| --- | --- | --- | --- |
+| **`\includeTable`** | `\@showproblemtabletrue` | ❌ 隐藏 | **开启**试卷头部的“题号-得分”大总分表格 |
+| **`\includeAnswer`** | `\@showanswertrue` | ❌ 隐藏 | **开启**参考答案环境的渲染（变为红蓝排版模式） |
+| **`\includeNotice`** | `\@shownoticetrue` | ❌ 隐藏 | **开启**考场注意事项说明及 100 分钟考试时长提示 |
+| **`\includeProblemCount`** | `\@showproblemcounttrue` | ❌ 隐藏 | **开启**“（本试卷共 X 道大题）”的自动化数量提示 |
+
+### 🛠️ 组合使用方法场景示例
+
+* **场景 A：生成学生打印版试卷（纯净版）**
+```latex
+\documentclass[windows]{exam-cau}
+\includeTable         % 需要总评分表
+\includeNotice        % 需要考场注意事项
+\includeProblemCount  % 需要显示大题统计
+% \includeAnswer      % 注释掉此行：不显示任何参考答案
+\begin{document}
+...
+
+```
+
+
+* **场景 B：生成教师/助教阅卷参考答案版（彩版）**
+```latex
+\documentclass[windows]{exam-cau}
+\includeAnswer        % 开启此行：激活所有 \begin{answer} 区域并显示红蓝解析
+% \includeTable       % 可选注释：隐藏大评分表，方便专注看答案
+\begin{document}
+...
+
+```
+
+
+
+---
+
+## 📝 5. 核心命令与代码样例
+
+### 🔹 A. 设置考试元信息
+
+在生成标题前，必须先声明基本信息：
 
 ```latex
-\problem{12}{选择题}{
+\setyear{2026}           % 设置起始年份（会自动输出 2026～2027 学年）
+\setsubject{数学分析}     % 设置科目名称，会自动联动至卷头下划线与页脚
+\setsemester{秋季学期}    % 设置当前学期
+\setTotalExNumber{15}    % 设置全卷小题总总数量（用于注意事项中自动抓取显示）
+
+```
+
+### 🔹 B. 录入大题语法 (`\problem`)
+
+```latex
+\problem{<大题分值/说明>}{<题型名称>}{<题目具体正文及小题列表>}
+
+```
+
+* **注意：** 如果不想要题型名称（例如单纯的长篇证明题），第二个参数直接留空 `{}` 即可。
+
+### 🔹 C. 灵活使用评分命令 (`\score`) 与 答案环境 (`answer`)
+
+#### 1. 在文本段落/列表项中使用
+
+在文本叙述中，`\score{n}` 会利用 `\hfill` 自动将分值推至最右侧，并呈现红色字样。
+
+```latex
+\problem{本题满分 15 分}{选择题}{
   \begin{enumerate}
-    \item 函数 $ f(x) = |x| $ 在 $ x=0 $ 处：
-      \begin{answer}
-        不可导
-      \end{answer}
+    \item 设 $f(x)$ 处处可逆，证明 $f$ 在 $\mathbb{R}^2$ 上不是双射。
+    \begin{answer}
+      显然对 $(x,y)$ 与 $(x,y+2\pi)$ 有：
+      $F(x,y) = F(x,y+2\pi)$ \score{3}   % 纯文本模式分值
+      所以 $F$ 不是双射。
+    \end{answer}
   \end{enumerate}
 }
 
 ```
 
----
+#### 2. 在标准单行行间公式中使用
 
-### 🔹 插入答案（配合 `\includeanswertrue`）
+在 `$$...$$` 或 `\begin{displaymath}` 块中，`\score{n}` 会自动切换为 `\tag*{}` 机制，保证分值整齐贴在公式最右侧。
 
 ```latex
-\begin{answer}
-  正确答案或参考解答
-\end{answer}
+\begin{displaymath}
+  u = a_1 x + b_1 y + c_1, \quad v = a_2 x + b_2 y + c_2
+  \score{2}
+\end{displaymath}
 
 ```
 
-- 使用 `\includeanswertrue` 可显示答案区域
-- 使用 `\includeanswerfalse` 或省略该命令则隐藏答案
+#### 3. 在多行对齐公式 `align / align*` 环境中使用
 
----
-
-### 🔹 生成试卷标题和题目表格
+模板内部能自动感知当前环境是否为 `align`。若在其中使用，分值将无缝挂载为该行的右侧标签，不会引起公式重叠或错位。
 
 ```latex
-\generateExamTitle   % 输出试卷头部信息
-\generateProblemTable % 输出题目列表表格 + 所有题目的正文
+\begin{align*}
+  d\omega &= \left( \frac{x}{y^2}r^\lambda - x\lambda r^{\lambda-2} \right) dx \wedge dy \\
+          &= \frac{x}{y^2}r^{\lambda-2}\left(-r^2 -\lambda r^2\right) dx \wedge dy \score{3} \\
+          &= 0. \score{2}
+\end{align*}
 
 ```
 
 ---
 
-## 📋 4. 表格样式说明
+## 🗂️ 6. 完整示文档范例 (`main.tex`)
 
-| 表头 | 内容 |
-| --- | --- |
-| 第一行 | 题号（一、二、三...） |
-| 第二行 | 分数占位符（空白单元格） |
-| 第三行 | 总分列 |
-
----
-
-## 🧾 5. 完整示例文档 (`main.tex`)
+以下是一个根据 `example-full.tex` 提炼的完整多题型混排框架，你可以直接复制并使用 `XeLaTeX` 编译运行：
 
 ```latex
+\documentclass[windows]{exam-cau} % 选用 Windows 字体集
 
-\documentclass[macos]{exam-cau}
-
-\newcommand{\mb}{\bb}
-\newcommand{\mc}{\mathcal}   
-\newcommand{\Lim}{\lim\limits}
-\newcommand{\Liminf}{\liminf\limits}
-
-% 控制是否显示答案
-%\includeanswertrue   % 显示答案
-\includeanswerfalse  % 不显示答案
+% ---- 1. 开关配置区 ----
+\includeTable         % 显示卷头总分表格
+\includeNotice        % 显示注意事项
+\includeProblemCount  % 显示大题总数统计
+\includeAnswer        % 如果需要打印答案，请取消注释本行
 
 \begin{document}
 
-% 考试信息设置
-\setyear{2023}
-\setsubject{模拟课程}
-\setsemester{春季学期}
+% ---- 2. 试卷元信息设置 ----
+\setyear{2020} 
+\setsubject{分析}
+\setsemester{秋季学期} 
+\setTotalExNumber{12}  % 全卷小题预估总数
 
-% 生成试卷标题等 
+% ---- 3. 生成卷头及诚信承诺栏 ----
 \generateExamTitle
 
-% 一、填空题 
-\problem{24}{填空题}{
-     \begin{enumerate}
-    \item [1.] $\Lim_{x\to 0}(\cos x)^{1/x^2}=$\underline{\quad\quad\quad\quad}
-      \vspace{0.2in}
+% ---- 4. 试卷正文录入 ----
 
-    \item [2.] 当 $p>0$ 时, $x^3+px+q=0$ 有\underline{\quad\quad\quad\quad}个实根
-      \vspace{0.2in}
+% 第一大题：选择题（合并分值说明）
+\problem{本题满分 15 分，共 5 小题，每小题 3 分。}{选择题}{
+  \begin{enumerate}
+    \item 求椭圆 $(a_1 x + b_1 y + c_1)^2 + (a_2 x + b_2 y + c_2)^2=1$ 所围的面积。
+      \begin{answer}
+        做变量替换关系，引入新变量：
+        \begin{displaymath}
+          a_1 x + b_1 y + c_1 = u, \quad a_2 x + b_2 y + c_2 = v \score{2}
+        \end{displaymath}
+        由重积分雅可比行列式变换性质得：
+        \begin{displaymath}
+          \iint_D dxdy = \frac{\pi}{|a_1 b_2 - a_2 b_1|}. \score{3}
+        \end{displaymath}
+      \end{answer}
       
-    \item [3.] 当 $x\to+\infty$ 时, 试将下述无穷大量按由低阶至高阶的顺序排列:\par
-      $e^x, \, x^x,\, x^{100},\,x^{99}(\ln x)^{100},\,
-      [x]!$ \underline{\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad}
-      \vspace{0.2in}
+    \item 另一道选择题内容...
+  \end{enumerate}
+}
 
-    \item [4.] $\int_0^\pi \cos^2 x dx =$ \underline{\quad\quad\quad\quad}
-      \vspace{0.2in}
+% 第二大题：解答题
+\problem{本题满分 12 分}{解答题}{
+  设 $f(x,y) = \frac{x^3 y}{x^4+y^2}$，当 $(x,y) \neq (0,0)$ 时。
+  \begin{enumerate}
+    \item \textsf{(6分)} 证明: $f(x,y)$ 在 $(0,0)$ 点沿任意方向可求方向导数；
+    \item \textsf{(6分)} 证明: $f(x,y)$ 在 $(0,0)$ 不可微。
+  \end{enumerate}
+  
+  \begin{answer}
+     \begin{enumerate}
+       \item 设方向向量为 $\bm{v}=(\cos\theta,\sin\theta)$：
+         \begin{displaymath}
+           \lim_{t\to0^+} \frac{f(t\cos\theta, t\sin\theta)-f(0,0)}{t} = 0 \score{6}
+         \end{displaymath}
+       \item 沿路径 $y=t^2, x=t$ 逼近时：
+         \begin{displaymath} 
+           R(t,t^2) = \frac{t^5}{t^4+t^4} = t \neq o(\sqrt{t^2+t^4}) \score{6}
+         \end{displaymath}
+         故不可微。
+     \end{enumerate}
+  \end{answer}
+}
 
-    \item [5.]
-      $\left.\frac{d}{dx}\right|_{x=1}\frac{\sqrt{x}}{1+2x}=$\underline{\quad\quad\quad\quad}
-      \vspace{0.2in}
+% 第三大题：纯证明题（隐藏题型字样）
+\problem{本题满分 10 分}{}{
+  证明：若 $u$ 在区域 $\Omega$ 上有二阶连续偏导数，则有：
+  \begin{displaymath}
+    \iiint_\Omega \Delta u \,dxdydz = \iint_S \frac{\partial u}{\partial \bm{n}}\,dS
+  \end{displaymath}
+  \begin{answer}
+    结合散度定理与方向导数定义：
+    \begin{align*}
+      \iint_S \frac{\partial u}{\partial \bm{n}}dS &= \iint_S \nabla u \cdot \bm{n} \,dS \score{4} \\
+      &= \iiint_\Omega \nabla\cdot \nabla u\, dxdydz = \iiint_\Omega \Delta u \,dxdydz \score{6}
+    \end{align*}
+    得证。
+  \end{answer}
+}
 
-    \item [6.] 求 $\Liminf_{n\to\infty}D(\frac1{\sqrt
-        {n+1}})=$\underline{\quad\quad\quad\quad}, 其中 $D(x)$ 为 Dirichlet 函数,
-      即
-      $$D(x)=
-      \begin{cases}
-        1 & x\in \mathbb{Q}\\
-        0 & x\not\in \mathbb{Q}
-      \end{cases}.
-      $$
-      \vspace{0.2in}
-
-    \item [7.] 求 $\frac{d^n}{dx^n}(x^2e^x)=$\underline{\quad\quad\quad\quad\quad\quad\quad\quad},
-      ($n\in\mathbb{N}$,化简所得结果)
-      \vspace{0.2in}
- 
-    \item [8.] 下列关于一致连续的说法中,正确的有多少个?\underline{\quad\quad\quad\quad}
-      \begin{enumerate}
-      \item 若$f(x)$在$(a,b)$连续,则对充分小的$\delta>0$,$f(x)$在
-        $[a+\delta,b-\delta]$上一致连续
-      \item 若$f(x)$在$(a,b)$连续,则在$(a,b)$上有界
-      \item 若$f(x)$在$(a,b)$上一致连续,则在$(a,b)$上有界
-      \item $\ln(x)$在$(1,+\infty)$上一致连续
-      \item 某区间上两个一致连续的函数之和一定一致连续
-      \end{enumerate}
-      (注: $a,b$ 均为有限值)
-    \end{enumerate}
-
-} % 第一大题结束 
-
-% 二、计算题
-\problem{24}{计算题}{
-    \begin{enumerate}
-    \item [1.] $$\int \cos^2(x)\sin(x)dx$$ \vspace{2.5in}
-    \item [2.] $$\int \frac x{\sqrt{1-x^2}}dx$$ \vspace{2.5in}
-      \newpage
-    \item [3.] $$\int \frac {-x^4+x^3-x^2-x-2}{(x^2+1)^2(x-1)}dx$$ \vspace{4in}
-    \item [4.] $$\int \sin(\ln x)dx$$\vspace{2in}
-    \end{enumerate}
-    \newpage
-} % 第二大题结束 
-
-% 第三大题  
-\problem{6}{}{
-  求 $a,b$, 使
-    $$f(x)=
-    \begin{cases}
-      ax+b & x>1\\
-      x^2-3x+2 & x\le 1
-    \end{cases}
-    $$
-    为可微函数.
-    \vspace{2.5in}
-} % 第三大题结束 
-
-% 第四大题 
-\problem{6}{}{ 
-  对于$\mathbb{R}$上有定义的函数, 若所论的导函数存在, 证明结论:\\
-    奇函数的导函数一定是偶函数.  \vspace{2in} \newpage
-} % 第四大题结束 
-
-% 第五大题 
-\problem{10}{}{
-求过曲线 $$x^{2n}+y^{2n}=1$$ 上 $(x_0,y_0)$ 点的切线方
-    程(其中 $n$ 为自然数, $y_0\neq0$). 并证明当 $n\to+\infty$ 时, 除有限个点外,
-    $y'(x)$ 要么趋于 $0$, 要么趋于 $\infty$. (注: 实际上随着 $n$ 的增加, 曲线越
-    来越接近于正方形)  \vspace{3in}
-} % 第五大题结束 
-
-% 第六大题 
-\problem{10}{}{
-设 $a<b$, $f(x)$ 在 $(-\infty,b)$ 和 $(a,+\infty)$ 均
-    一致连续, 证明 $f(x)$ 在 $(-\infty,+\infty)$ 上也一致连续.
-    \vspace{2in} \newpage
-} % 第六大题结束 
-
-% 第七大题 
-\problem{10}{}{
-设 $f(x)$ 在 $\mathbb{R}$ 上连续, $f(1)>0$, 且
-    $\Lim_{x\to\pm\infty}f(x)=0$, 证明 $f(x)$ 在 $\mathbb{R}$ 上有最大值.
-    \vspace{3in}
-} % 第七大题结束 
-
-% 第八大题 
-\problem{10}{}{
-用 Bolzano-Weierstrass 定理证明有界闭区间上的连续函数一定有
-    界.\vspace{2in}
-} % 第八大题结束 
-
-% 输出表格和正文
+% ---- 5. 驱动渲染的核心命令 ----
+% 该命令会依次：1.检查并输出大题评分表 2.渲染诚信承诺书 3.渲染注意事项 4.集中批量吐出上述所有 problem 的正文
 \generateProblemTable
 
 \end{document}
 
-
-
-
-
 ```
 
 ---
 
-## 🎨 6. 答案格式说明
+## 💡 7. 编译与避坑指南
 
-- 答案部分用红色加粗显示“【参考答案】”
-- 答案正文为蓝色字体
-- 默认不显示答案（更适用于打印试卷）
-
----
-
-## 🚩7. 设置评分分值
-
-### **✅ 文本段落中使用：**
-
-```latex
-\problem{10}{填空题}{
- \begin{enumerate}
- \item 函数 $ f(x) = x^2 $ 的导数是：
-  \score{3}
- \begin{answer}
-  $ f'(x) = 2x $
- \end{answer}
- \end{enumerate}
-}
-```
-
-### **✅ 单行公式中使用：**
-
-```latex
-$$
- \int_0^1 x dx = \frac{1}{2} \score{4}
-$$
-```
-
-### **✅ 多行公式中使用（`align`）：**
-
-```latex
-\begin{align}
- \frac{d}{dx} \sin x &= \cos x \score{5} \\
- \frac{d}{dx} \ln x  &= \frac{1}{x}
-\end{align}
-```
-
-✅ **可以在 `align`、`gather`、`equation` 等环境中使用 `\score{分值}` ！**
-
----
-
-## **📌 注意事项**
-
-| **环境** | **是否支持** | **说明** |
-| --- | --- | --- |
-| **`$$...$$`** | ✅ 支持 | 使用**`\tag*{}`**实现右对齐 |
-| **`equation`** | ✅ 支持 | 同上 |
-| **`align`** | ✅ 支持 | 使用 AMS 内部机制判断 |
-| **`align*`** | ✅ 支持 | 无需编号也支持 |
-| **`tabular`**、**`minipage`**等复杂结构中 | ⚠️ 不建议 | 可能导致布局混乱 |
-
----
-
-## **✅ 总结**
-
-| **功能** | **实现方式** |
-| --- | --- |
-| 在文本中右对齐红色分数 | **`\hfill \textcolor{red}{( #1 分)}`** |
-| 在公式中右对齐红色分数 | **`\tag*{\textcolor{red}{( #1 分)}}`** |
-| 在**`align`**等 AMS 环境中支持 | 使用**`\ifmeasuring@`**和**`\@currenvir`**判断环境类型 |
----
-
-## 🛠️ 8. 已知功能与扩展建议
-
-### ✅ 当前已实现功能
-
-- 自动题号生成
-- 表格自动对齐
-- 答案显示控制
-- 多平台字体适配
-- 页眉页脚定制
-- 诚信承诺栏
-- 标题栏美观排版
-
-### 💡 可扩展建议（后续可添加）
-
-| 功能 | 描述 |
-| --- | --- |
-| `\scoreline` | 自动生成得分栏 |
-| `\answerpage` | 单独输出所有答案一页 |
-| `\useanswersheettrue` | 开启答题本模式（仅留空题） |
-| `\zihao` 字号调整 | 更精细控制字体大小 |
-| `\makecell` 美化表格 | 支持换行、居中 |
-| `\boxed` | 数学公式答案框选 |
-
----
-
-## 📝 9. 注意事项
-
-- 推荐使用 `XeLaTeX` 编译两次以确保题号、页码正确
-- 如需修改字体，请在 `.cls` 文件中调整对应系统的字体名称
-- 答案环境必须成对出现：`\begin{answer}...\end{answer}`
-- 题目应放在 `\generateProblemTable` 之前定义
-
----
-
-## 📁 10. 目录结构建议
-
-```
-your-folder/
-├── exam-cau.cls       ← 本模板类文件
-└── main.tex           ← 用户主文档
+1. **必须要编译两次：** 由于大总分表格需要动态统计 `\problem` 的调用次数，且页脚的“共 X 页”依赖 `lastpage` 宏包的引用标签，因此**必须使用 XeLaTeX 连续编译 2 次以上**才能获取正确排版。
+2. **清空计数缓存：** 当你删除了某道大题或者大幅度调整结构后，如果遭遇表格列数报错，请手动**删除同目录下的 `.aux` 缓存文件**，然后重新编译即可。
+3. **大题正文闭合：** 所有题目正文、`enumerate` 列表、甚至具体的 `answer` 模块，都必须完完整整地包裹在 `\problem{...}{...}{ 题目内容 }` 的**第三个参数内**。大题命令之后不要遗漏闭合花括号 `}`。
 
 ```
 
----
-
-## 🎉 11. 结语
-
-本模板专为高校教师、助教设计，具有高度可读性和灵活性，适合用于期中期末考试、模拟试题等场景。
-
----
-
-## 注记
-
-本模版是在多个 AI 大语言模型的帮助下设计完成的。
+```

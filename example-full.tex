@@ -1,0 +1,492 @@
+\documentclass[macos]{exam-cau}
+
+\includeAnswer  % 显示答案, 注释掉则不显示答案
+\includeTable  % 显示题目-分值表格，注释掉则不显示表格 
+\includeNotice % 显示注意事项，注释掉则不显示注意事项 
+
+\begin{document}
+
+% 考试信息设置
+\setyear{2020} % 将在卷头输出 2025～2026 学年
+\setsubject{数学分析}
+\setsemester{秋季学期} 
+\setTotalExNumber{15} % 设置小题总数量
+
+% 生成试卷标题
+\generateExamTitle
+
+% -----------------------------
+% 一、选择题（合并为一道大题）
+% -----------------------------
+%
+\problem{本题满分 15 分，共 5 小题，每小题 3 分。在每小题给出的四个选 
+项中，只有一项是符合题目要求的。}{选择题}
+{
+  \begin{enumerate}
+    \item 求椭圆 $(a_1 x + b_1 y + c_1)^2 + (a_2 x + b_2 y + c_2)^2=1$ 所围
+      的面积，其中 $a_1 b_2 - a_2 b_1 \neq 0$.
+      \begin{answer}
+        设 
+        \begin{displaymath}
+         a_1 x + b_1 y + c_1 = u, \quad a_2 x + b_2 y + c_2 = v
+        \score{2}   
+        \end{displaymath}
+        原椭圆所围的区域设为 $D$，新变量下所围的区域为 $E = u^2+v^2\le 1$, 
+        从而有变量替换关系 
+        \begin{displaymath}
+          \begin{pmatrix}
+            x \\ y 
+          \end{pmatrix} 
+          = 
+          \begin{pmatrix}
+            a_1 & b_1 \\ 
+            a_2 & b_2 
+          \end{pmatrix}^{-1} 
+          \begin{pmatrix}
+            u-c_1 \\ v-c_2
+          \end{pmatrix}
+          \text{\score{2}}
+        \end{displaymath}
+        所以 
+        \begin{displaymath}
+          \iint_D dxdy = \iint_E \left| \det \begin{pmatrix}
+            a_1 & b_1 \\
+            a_2 & b_2 
+          \end{pmatrix}^{-1}\right| dudv = \frac{\pi}{|a_1 b_2 - a_2 b_1|}.
+          \text{\score{3}}
+        \end{displaymath}
+      \end{answer}
+
+
+    \item 设 $\bm{F}(x,y)= (e^x \cos y, e^x \sin y)^T$, 证明： 
+      $D\bm{F}(x,y)$ 处处可逆，但 $\bm{F}$ 在 $\mathbb{R}^2$ 上不是双射. 
+      \begin{answer}
+        首先，
+        \begin{displaymath}
+          D\bm{F} = \begin{pmatrix}
+            e^x \cos y & - e^x \sin y \\ 
+            e^x \sin y & e^x \cos y 
+          \end{pmatrix}
+        \end{displaymath}
+        满足 \begin{displaymath}
+          \det D\bm{F} = e^{2x}\neq 0, \score{4}
+        \end{displaymath}
+        所以 $D\bm{F}(x,y)$ 处处可逆，但 
+        显然对 $(x,y)$ 与 $(x,y+2\pi)$ 有 
+        \begin{displaymath}
+          \bm{F}(x,y) = \bm{F}(x,y+2\pi) \score{3}
+        \end{displaymath}
+        所以 $\bm{F}$ 不是双射. 
+      \end{answer}
+
+
+    \item 求指数 $\lambda$, 使得曲线积分 
+      \begin{displaymath}
+        I = \int_{(x_0,y_0)}^{(x,y)} \frac{x}{y}\; r^\lambda\; dx 
+        - \frac{x^2}{y^2}\; r^{\lambda}\; dy, 
+        \quad (y>0)
+      \end{displaymath}
+      与路径无关，其中 $r=\sqrt{x^2+y^2}$. 
+     \begin{answer}
+        由于所在区域为 $\{y>0\}$ 为一个单连通区域， 
+        因此只需考虑 $1$-形式 $\omega = \frac{x}{y}r^\lambda dx - \frac{x^2}{y^2}r^\lambda dy$ 
+        何时为闭的，即 $d\omega = 0$.\score{2} 
+        \begin{align*}
+          d\omega & = \left(\left(-\frac{x^2}{y^2}r^{\lambda}\right)_x - \left(\frac{x}y r^\lambda\right)_y \right)dx\wedge dy \\ 
+                  &=\left(-\frac{2x}{y^2}r^\lambda - \frac{x^3}{y^2}\lambda r^{\lambda-2}
+                +\frac{x}{y^2}r^{\lambda}-x\lambda r^{\lambda-2}\right)dx\wedge dy \\ 
+                  &=\frac{x}{y^2}r^{\lambda-2}\left(-r^2 -\lambda r^2\right) dx\wedge dy\\ 
+                  &=0. \score{3}
+        \end{align*}
+        所以 $\lambda = -1$. \score{2}
+     \end{answer}
+
+
+    \item 计算第二类曲面积分 
+      \begin{displaymath}
+      I = \iint_S f(x)\; dydz + g(y)\; dzdx + h(z)\; dxdy, 
+      \end{displaymath}
+      其中 $S$ 为长方体 ($0\le x \le a$, $0\le y \le b$, $0\le z \le c$) 的表面，
+      取外侧为正，$f(x)$, $g(y)$ 和 $h(z)$ 为 $S$ 上的连续函数.
+      \begin{answer} 
+        设长方体的六个表面分别为 $S_{\text{前}}$, $S_{\text{后}}$, $S_{\text{左}}$, $S_{\text{右}}$, 
+        $S_{\text{上}}$, $S_{\text{下}}$，则相应的法方向应分别为 
+        $-\bm{j}$, $\bm{j}$, $-\bm{i}$, $\bm{i}$, $\bm{k}$, $-\bm{k}$, 
+        对应的面积分别为 $ac$, $ac$, $bc$, $bc$, $ab$, $ab$.
+        \score{2}
+        \begin{align*}
+          I &= \iint_S (f,g,h)\cdot \bm{n}\, dS \\ 
+            &= -\iint_{S_{\text{前}}} (f(x),g(y),h(z))\cdot \bm{j}\, dS +
+            \iint_{S_{\text{后}}} (f(x), g(y), h(z))\cdot \bm{j} dS \\ 
+            & -\iint_{S_{\text{左}}} (f(x), g(y), h(z)) \cdot \bm{i} \, dS 
+            + \iint_{S_{\text{右}}} (f(x), g(y), h(z))\cdot \bm{i}\, dS \\ 
+            & + \iint_{S_{\text{上}}} (f(x), g(y), h(z))\cdot \bm{k} \, dS 
+            -\iint_{S_{\text{下}}}(f(x), g(y), h(z))\cdot \bm{k} \, dS \score{2}\\ 
+            &= ac (g(b)-g(0)) + bc(f(a)-f(0))+ab(h(c)-h(0)).  \score{3}
+         \end{align*} 
+      \end{answer}
+
+    \item 设 $f(x,y)$ 在 $[0,\pi]\times[0,\pi]$ 上连续，且恒取正值，
+      试求 
+      \begin{displaymath}
+        \lim_{n\to+\infty} \iint_{[0,\pi]\times[0,\pi]} \sin(x) \sqrt[n]{f(x,y)} dxdy. 
+      \end{displaymath}
+      \begin{answer}
+        由于 $f(x,y)$ 在有界闭集 $[0,\pi]\times[0,\pi]$ 上连续，且恒取正值， 
+        则 $f(x,y)$ 在 $[0,\pi]\times[0,\pi]$ 上存在正的最大和最小值，
+        分别设为 $m_f$ 和 $M_f$. %\score{1}
+
+        则根据 $\sin(x)$ 在 $[0,\pi]\times[0,\pi] $
+        上的非负性和重积分的保序性，有 
+        \begin{displaymath}
+          \sqrt[n]{m_f}\iint_{[0,\pi]\times[0,\pi]} \sin(x)  dxdy 
+          \le\iint_{[0,\pi]\times[0,\pi]}\sin(x) \sqrt[n]{f(x,y)}dxdy
+          \le \sqrt[n]{M_f}\iint_{[0,\pi]\times[0,\pi]} \sin(x) dxdy \score{2}
+        \end{displaymath}
+        由于 \begin{displaymath}
+          \iint_{[0,\pi]\times[0,\pi]}\sin(x)dxdy = 2\pi, \score{3}
+        \end{displaymath}
+         所以根据夹逼定理知
+        \begin{displaymath}
+          \lim_{n\to+\infty} \iint_{[0,\pi]\times[0,\pi]} \sin(x) \sqrt[n]{f(x,y)} dxdy=2\pi. \score{2} 
+        \end{displaymath}
+        {\color{red} 注：本题也可使用积分中值定理，但也需要考虑 $f(x,y)$ 的正的下界和上界.}  
+       \end{answer}
+  \end{enumerate}
+}
+
+% -----------------------------
+% 二
+% -----------------------------
+\problem{12}{解答题}{
+  设 
+  \begin{displaymath} 
+    f(x,y) = \begin{cases}
+        \frac{x^3 y}{x^4+y^2} & (x,y)\neq (0,0)\\ 
+    0 & (x,y)=(0,0)
+    \end{cases}
+  \end{displaymath}
+  \begin{enumerate}
+    \item \textsf{(6分)}  证明: $f(x,y)$ 在 $(0,0)$ 点沿任意方向 $\bm{v}$ 可求方向导数，并求出方向导数的值；
+    \item \textsf{(6分)} 证明: $f(x,y)$ 在 $(0,0)$ 不可微. 
+  \end{enumerate}
+  \begin{answer}
+     \begin{enumerate}
+       \item 设 $\bm{v}=(\cos\theta,\sin\theta)$, $(\theta\in[0,2\pi)$), 
+         \begin{displaymath}
+           \lim_{t\to0^+} \frac{f(t\cos\theta, t\sin\theta)-f(0,0)}{t} = 
+           \lim_{t\to 0^+} \frac{t^4\cos^3\theta \sin\theta}{t^4\cos^4\theta +t^2\sin^2\theta} 
+           \text{\score{3}}
+         \end{displaymath}
+         此极限为
+         \begin{displaymath}
+           \lim_{t\to 0^+} \frac{t^4\cos^3\theta \sin\theta}{t^4\cos^4\theta +t^2\sin^2\theta}
+           =
+           \begin{cases}
+             0, &\sin\theta\neq 0,\\
+             0, &\sin\theta = 0,  
+           \end{cases}. \text{\score{3}}
+         \end{displaymath}
+         故方向导数存在，且方向导数在任意方向上均为 $0$. 
+        \item 由于 $\frac{\partial f}{\partial x}(0,0) = \frac{\partial f}{\partial y}(0,0) = 0$, 
+          \score{2}
+
+          故 
+          \begin{displaymath}
+            f(x,y) - f(0,0) = R(x,y)
+          \end{displaymath}
+          $f$ 在 $(0,0)$ 可微与否，只要看 $R(x,y)$ 是否为 $o(\sqrt{x^2+y^2})$ 量级. 
+          取 $y=t^2$, $x=t$，则 
+          \begin{displaymath} 
+            R(t,t^2) = \frac{t^5}{t^4+t^4} = t\neq o(\sqrt{t^2+t^4}),\score{2}
+        \end{displaymath}
+          因此 $f(x,y)$ 在 $(0,0)$ 不可微. \score{2}
+     \end{enumerate}
+  \end{answer}
+}
+
+
+
+% -----------------------------
+% 三
+% -----------------------------
+\problem{10}{解答题}{
+  讨论 $p$ 取不同值时 广义重积分
+  \begin{displaymath}
+    \iint_{x^2+y^2\le 1}\frac{\varphi(x,y)}{(x^2+xy+y^2)^p}dxdy. 
+  \end{displaymath}
+  的收敛性, 其中 $\varphi(x,y)$ 连续，且 $0<m< |\varphi(x,y)|< M$. 
+  \begin{answer}
+    如题可知，此积分为有界区域上的瑕积分，$(0,0)$ 为瑕点. 
+    另外由于多重广义积分的收敛等价于绝对收敛，因此只需考虑
+    非负函数的广义积分
+    \begin{displaymath}
+      \iint_{x^2+y^2\le 1} \frac{|\varphi(x,y)|}{(x^2+xy+y^2)^p}dxdy
+    \end{displaymath}
+    的收敛性.\score{2}
+
+    由 $m<|\varphi(x,y)|<M$，有 
+    \begin{displaymath}
+      m\iint_{x^2+y^2\le 1} \frac{1}{(x^2+xy+y^2)^p}dxdy\le 
+      \iint_{x^2+y^2\le 1} \frac{|\varphi(x,y)|}{(x^2+xy+y^2)^p}dxdy
+      \le M \iint_{x^2+y^2\le 1}\frac{1}{(x^2+xy+y^2)^p}dxdy. 
+    \end{displaymath}
+
+    所以由比较判别法知 
+    $$\iint_{x^2+y^2\le 1}\frac{\varphi(x,y)}{(x^2+xy+y^2)^p}dxdy\quad 
+    \text{与} \quad \iint_{x^2+y^2\le 1}\frac{1}{(x^2+xy+y^2)^p}dxdy$$ 
+    具有相同的收敛性. \score{2}
+
+    对 $\iint_{x^2+y^2\le 1}\frac{1}{(x^2+xy+y^2)^p}dxdy$, 注意到 
+    $$x^2+xy+y^2 = (x+\frac{y}{2})^2+\frac{3}{4}y^2,$$ 因此可考虑变量替换 
+    $u = x+\frac{y}{2}$, $v= \frac{\sqrt3}{2}y$,  即 
+    \begin{displaymath}
+      x= u - \frac{1}{\sqrt3}v,\quad y = \frac{2}{\sqrt3} v, \score{2}
+    \end{displaymath}
+    则存在 $R>0$，使得瑕积分 $\iint_{x^2+y^2\le 1}\frac{1}{(x^2+xy+y^2)^p} dxdy $ 的收敛性 
+    等价于 $\iint_{x^2+xy+y^2\le R^2}\frac{1}{(x^2+xy+y^2)^p} dxdy$ 的收敛性.
+
+    所以，考虑极限 
+    \begin{align*}
+      &\lim_{\epsilon\to 0^+}\iint_{\epsilon^2\le x^2+xy+y^2\le R^2}\frac{1}{(x^2+xy+y^2)^p}dxdy\\ 
+      =& \lim_{\epsilon\to 0^+} \frac{2}{\sqrt3}\iint_{\epsilon^2\le u^2+v^2\le R^2} \frac{1}{(u^2+v^2)^p}  dudv \\ 
+      =& \lim_{\epsilon\to 0^+}\frac{2}{\sqrt3}\int_{0}^{2\pi} d\theta \int_{\epsilon}^R \frac{r}{r^{2p}} dr\\  
+      =& \lim_{\epsilon\to0^+}\frac{4\pi}{\sqrt{3}}\int_\epsilon ^R r^{1-2p}dr. \score{3} 
+    \end{align*}
+    因此显然 $1-2p>-1$，即 $p<1$ 时积分收敛. \score{1}
+  \end{answer}
+
+}
+
+
+% ---------------------------
+% 四
+% ---------------------------
+\problem{10}{证明题}{
+  证明：
+  \begin{displaymath}
+    \iint_D f(a \sin\varphi \; \cos\theta + b \sin\varphi \;\sin\theta + c \cos\varphi) \sin\varphi\; d\theta d\varphi 
+    = 2\pi \int_{-1}^1 f(u \sqrt{a^2+b^2+c^2})du,
+  \end{displaymath}
+  这里 $D = \{(\theta,\varphi)\;|\; 0\le \theta\le 2\pi, \; 0\le \varphi \le \pi \}$, 
+  $a^2+b^2+c^2>0$, $f(t)$ 为连续函数. 
+\begin{answer}
+  考虑参数形式 
+  \begin{displaymath}
+    x= \sin\varphi \cos\theta,\quad 
+    y= \sin\varphi \sin\theta, \quad 
+    z= \cos\varphi,\quad \theta\in[0,2\pi],\quad \varphi\in[0,\pi], 
+  \end{displaymath}
+  则以 $(\varphi,\theta)$ 为参数的参数曲面 $S$ 为单位球面 $x^2+y^2+z^2=1$，
+  其面积微元 $dS=\sqrt{EG-F^2}d\varphi d\theta$，
+  其中 
+  \begin{align*}
+    E &= (\cos\varphi\cos\theta, \cos\varphi\sin\theta, -\sin\varphi)\cdot 
+        (\cos\varphi\cos\theta, \cos\varphi\sin\theta, -\sin\varphi)=1,\\
+    F &= (\cos\varphi\cos\theta, \cos\varphi\sin\theta, -\sin\varphi)\cdot 
+        (-\sin\varphi\sin\theta, \sin\varphi\cos\theta, 0) = 0, \\ 
+    G &= (-\sin\varphi\sin\theta, \sin\varphi\cos\theta, 0)\cdot 
+    (-\sin\varphi\sin\theta, \sin\varphi\cos\theta, 0) = \sin^2\varphi. 
+  \end{align*}
+  设区域 $D=[0,2\pi]\times[0,\pi]$，则 
+  \begin{displaymath}
+    \iint_D f(a \sin\varphi \; \cos\theta + b \sin\varphi \;\sin\theta + c \cos\varphi) \sin\varphi\; d\theta d\varphi 
+    = \iint_S f(ax+by+cz)dS.\score{4} 
+  \end{displaymath}
+  设 $u = \frac{1}{\sqrt{a^2+b^2+c^2}}(ax+by+cz) := \bm{e}_1\cdot (x,y,z)$, 
+  则 $\bm{e}_1= \frac{(a,b,c)}{\sqrt{a^2+b^2+c^2}}$ 为单位向量. 
+  将 $\bm{e}_1$ 扩充为 $\mathbb{R}^3$ 的一组标准正交基 $\{\bm{e}_1,\bm{e}_2,\bm{e}_3\}$，
+  则 $A := \begin{pmatrix}\bm{e}_1\\ \bm{e}_2 \\ \bm{e}_3\end{pmatrix}$
+  为正交矩阵. 做变量替换 
+  \begin{displaymath}
+    \begin{pmatrix}
+      u \\ v \\ w 
+      \end{pmatrix}= A 
+      \begin{pmatrix} 
+        x \\ y \\z 
+      \end{pmatrix},\quad 
+      \Longrightarrow 
+ \begin{pmatrix}
+      x \\ y \\ z 
+    \end{pmatrix}= A^{T} 
+      \begin{pmatrix} 
+        u \\ v \\w 
+      \end{pmatrix}, \score{2}
+  \end{displaymath}
+  则 $S$ 在新坐标下可以表示为 $u^2+v^2+w^2=1$，从而可设 
+  $(v,w) = \sqrt{1-u^2}(\cos\theta,\sin\theta)$， $u\in[-1,1]$, $\theta\in[0,2\pi]$. 
+  在 $(u,\theta)$ 参数下， $S$ 的 Gauss 系数为 
+  \begin{align*}
+    \tilde{E} &= \left(1, -\frac{u}{\sqrt{1-u^2}}\cos\theta, \frac{u}{\sqrt{1-u^2}}\sin\theta\right)\cdot 
+    \left(1, -\frac{u}{\sqrt{1-u^2}}\cos\theta, \frac{u}{\sqrt{1-u^2}}\sin\theta\right)=\frac{1}{1-u^2},\\ 
+    \tilde{F} &= \left(1, -\frac{u}{\sqrt{1-u^2}}\cos\theta, \frac{u}{\sqrt{1-u^2}}\sin\theta\right)\cdot 
+      \left(0,-\sqrt{1-u^2}\sin\theta, \sqrt{1-u^2}\cos\theta\right) = 0,\\ 
+    \tilde{G} &=  \left(0,-\sqrt{1-u^2}\sin\theta, \sqrt{1-u^2}\cos\theta\right)\cdot 
+     \left(0,-\sqrt{1-u^2}\sin\theta, \sqrt{1-u^2}\cos\theta\right)
+      = 1-u^2. 
+  \end{align*}
+  所以 $dS = \sqrt{\tilde{E}\tilde{G}-\tilde{F}^2} du d\theta = du d\theta$. \score{2} 
+
+  从而
+  \begin{align*}
+    \iint_S f(ax+by+cz)dS 
+    &= \iint_{[-1,1]\times[0,2\pi]} f(u\sqrt{a^2+b^2+c^2})du d\theta \\ 
+    &= 2\pi \int_{-1}^1 f(u\sqrt{a^2+b^2+c^2}) du. \score{2}
+  \end{align*}
+\end{answer}
+}
+
+
+% --------------------------- 
+%  五. 
+% --------------------------- 
+\problem{10}{解答题}{
+求摆线 $x = t-\sin t$, $y=1-\cos t$ ($0\le t\le 2\pi$) 的质心 (设其质量分布是均匀的).
+\begin{answer}
+  设曲线为 $L$，其线密度为 $\rho$, 质心坐标为 $(\bar{x},\bar{y})$，则由对称性 
+  可知 $\bar{x} = \pi$. 而 \score{2} 
+  \begin{displaymath}
+    \bar{y} = \frac{\int_L \rho y ds}{ \rho ds} = \frac{\int_L y ds}{\int_L ds}. \score{2}
+  \end{displaymath}
+  由于 $x'(t) = 1-\cos t$, $y'(t) = \sin(t)$，故弧长微元 
+  \begin{displaymath}
+    ds =\sqrt{x'(t)^2+y'(t)^2}dt = \sqrt{2-2\cos t}dt = 2\sin(t/2)dt. \score{1}
+  \end{displaymath}
+  所以 
+  \begin{displaymath}
+  \int_L ds = \int_0^{2\pi} 2\sin(t/2)dt =4 \int_0^\pi \sin(u)du = 8. \score{2} 
+  \end{displaymath}
+  而 
+  \begin{align*}
+    \int_L y ds &= \int_0^{2\pi} (1-\cos(t))2\sin(t/2)dt \\ 
+    &= 8\int_0^\pi \sin^3(u)du \\ 
+    &= 16 \frac{2!!}{3!!} = \frac{32}{3}. \score{2}
+  \end{align*}
+  所以 
+  \begin{displaymath}
+  \bar{y} = \frac{\int_L y ds}{\int_L ds }= \frac{32/3}{8} = \frac43. 
+  \end{displaymath}
+  综上，质心坐标为 $(\bar{x}, \bar{y}) = (\pi, 4/3)$.  \score{1}
+\end{answer}
+}
+
+
+% -------------------------- 
+%  六. 
+% -------------------------- 
+\problem{10}{证明题}{
+  若 $\Delta u = \frac{\partial^2 u}{\partial x^2} 
+  + \frac{\partial^2 u}{\partial y^2} + 
+  \frac{\partial^2 u}{\partial z^2}$, 
+  闭曲面 $S$ 为包围的区域 $\Omega\subset\mathbb{R}^3$ 的外侧，则证明 
+  \begin{enumerate}
+    \item \textsf{(5分)} $\iiint_\Omega \Delta u \; dxdydz = \iint_S \frac{\partial u}{\partial \bm{n}}\; dS$; 
+    \item \textsf{(5分)} $\iint_S u \frac{\partial u}{\partial \bm{n}}dS = 
+      \iiint_\Omega \nabla u \cdot \nabla u \; dxdydz + 
+      \iiint_\Omega u \Delta u \; dxdydz$, 
+  \end{enumerate}
+  其中 $u$ 在区域 $\Omega$ 及其边界 $S$ 上有二阶连续偏导数, 
+  $\frac{\partial u}{\partial \bm{n}}$ 为沿曲面 $S$ 外 
+  法线方向的方向导数. 
+  \begin{answer}
+    \begin{enumerate}
+      \item 
+        因为
+        \begin{displaymath}
+          \iint_S \frac{\partial u}{\partial \bm{n}}dS = 
+          \iint_S \nabla u \cdot \bm{n} \,dS, \text{\score{2}}
+        \end{displaymath}
+        所以由 Gauss 公式， 
+        \begin{displaymath}
+          \iint_S \frac{\partial u}{\partial \bm{n}}\,dS = 
+          \iiint_\Omega \nabla\cdot \nabla u\, dxdydz 
+          = \iiint \Delta u \,dxdydz. \score{3}
+        \end{displaymath}
+      \item 
+        因为
+        \begin{displaymath}
+          \iint_S u \frac{\partial u}{\partial \bm{n}}\,dS = 
+          \iint_S u \nabla u \cdot \bm{n} \,dS, \score{2}
+        \end{displaymath}
+        所以由 Gauss 公式， 
+        \begin{displaymath}
+          \iint_S u \frac{\partial u}{\partial \bm{n}}dS = 
+          \iiint_\Omega \nabla\cdot (u \nabla u) \,dxdydz 
+          = \iiint_\Omega \nabla u \cdot \nabla u\, dxdydz + \iiint u \Delta u\, dxdydz. \score{3}
+        \end{displaymath}
+    \end{enumerate}
+  \end{answer}
+}
+
+% ------------------------ 
+% 七. 
+% ------------------------ 
+\problem{13}{解答题}{
+  设 $\mathbb{R}^3$ 中向量场 $\bm{A} = \dfrac{-y \bm{i} + x \bm{j}}{r^2}$，其中 $r =\sqrt{x^2+y^2}$, 
+  \begin{enumerate}
+    \item \textsf{(5分)} 求 $\mathrm{\bm{rot}}\bm{A}$; 
+    \item \textsf{(8分)} 对于 $\mathbb{R}^3$ 中任意一张有界光滑可定向曲面 $\Sigma$，
+      设其边界 $\partial \Sigma$ 为一条光滑简单闭曲线，记为 $\Gamma$. 
+      指定 $\Sigma$ 上的正法向为上侧（即法向量朝 $z$ 轴
+      正向），且设 $\Gamma$ 上具有曲面的诱导定向. 
+      分别计算当 $z$ 轴不穿过 $\Sigma$ 和 $z$ 轴 
+      穿过 $\Sigma$ 时的曲线积分 (不考虑 $z$ 轴与 $\Gamma$ 相交的情况)
+      \begin{displaymath}
+        \int_\Gamma \bm{A}\cdot \bm{\tau} ds. 
+      \end{displaymath}
+  \end{enumerate}
+  \begin{answer}
+    \begin{enumerate}
+      \item 由于 $\bm{A} = \left(-\frac{y}{{x^2+y^2}}, \frac{x}{{x^2+y^2}},0 \right)$, 
+        所以 \score{2} 
+        \begin{align*}
+          \mathrm{\bm{rot}}(\bm{A})
+          &= \begin{vmatrix}
+            \bm{i} & \bm{j} & \bm{k}\\ 
+            \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial }{\partial z} \\ 
+            -\frac{y}{{x^2+y^2}}& \frac{x}{{x^2+y^2}} & 0 
+          \end{vmatrix} \\ 
+          &=\bm{0}.  \score{3}
+        \end{align*}
+      \item 
+        \begin{enumerate}
+          \item 若 $z$ 轴不穿过 $\Sigma$，则在曲面上 $\bm{A}$ 处处有定义，由 
+            Stokes 公式有 
+            \begin{displaymath}
+              \int_\Gamma \bm{A}\cdot \bm{\tau} ds = 
+              \iint_\Sigma \mathrm{\bm{rot}}(\bm{A})\cdot \bm{n} dS = 0.\score{2} 
+            \end{displaymath}
+          \item 若 $z$ 轴穿过 $\Sigma$, 则在交点上 $\bm{A}$ 无定义. 
+            则考虑以 $z$ 轴为中轴的一个细圆柱 
+            $C: x^2+y^2=\varepsilon^2$, 其中 $\varepsilon>0$ 充分小. 
+            则 $C$ 与 $\Sigma$ 的交线记为 $\gamma$，将 $\gamma$ 上方 取 
+            圆柱 $C$ 上一个垂直于 $z$ 轴的圆周 $x^2+y^2=\varepsilon^2$，
+            记为 $\gamma'$, 且设 $\gamma$ 与 $\gamma'$ 上的 
+            定向均与 $\Gamma$ 相同. 设 $\Sigma$ 挖去圆柱 $C$ 内 
+            的部分后剩下的曲面为 $\Sigma_\varepsilon$, 则由 Stokes 公式 
+            有 \score{2}
+            \begin{align*}
+              \int_\Gamma - \int_\gamma \bm{A}\cdot 
+              \bm{\tau} ds = \iint_{\Sigma_\varepsilon} \mathrm{\bm{rot}}(A)\cdot \bm{n}\, dS 
+              =0. \score{2} 
+            \end{align*}
+            从而 $\int_{\Gamma} \bm{A}\cdot \bm{\tau}ds = 
+            \int_{\gamma} \bm{A}\cdot \bm{\tau}ds = \int_{\gamma'}\bm{A}\cdot \bm{\tau} ds $. 
+            而 $\gamma'$ 的参数形式为 $(\varepsilon \cos\theta, \varepsilon\sin\theta, h)$, 
+            $\theta\in[0,2\pi]$, $h$ 为常数，所以 
+            \begin{displaymath}
+              \int_{\gamma'} \bm{A}\cdot \bm{\tau} ds = 
+              \int_0^{2\pi} \frac{1}{\varepsilon}(-\sin\theta, \cos\theta,0)\cdot(-\sin\theta, \cos\theta, 0)
+              \varepsilon d\theta = 2\pi. \score{2}
+            \end{displaymath}
+            因此 $\int_\Gamma \bm{A}\cdot\bm{\tau}ds = 2\pi$.
+        \end{enumerate}
+    \end{enumerate}
+  \end{answer}
+}
+\generateProblemTable
+
+\end{document}
+
+
+

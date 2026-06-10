@@ -1,0 +1,51 @@
+\documentclass{exam-cau} % 选用 Windows 字体集编译
+
+% 1. 全局试卷元数据配置
+\setyear{2025}
+\setsemester{秋季学期}
+\setsubject{高等数学A}
+\setTotalExNumber{24} % 假设全卷共 24 道小题
+
+% 2. 状态开关触发（根据需要取消注释）
+\includeTable   % 显示顶部的得分表
+\includeNotice  % 显示注意事项
+\includeAnswer  % 开启此命令将同时编译出答案（发给学生时请注释掉此行）
+\includeProblemCount % 开启此命令则显示大题总数 
+
+\begin{document}
+
+% 3. 生成试卷大标题
+\generateExamTitle
+
+
+% 4. 开始编写大题内容
+\problem{共20分，每小题4分}{选择题}{下列各题的四个选项中，只有一个选项是正确的，请将正确答案涂在答题卡上。
+
+  \begin{enumerate}
+    \item 设函数 $f(x) = \frac{\sin x}{x}$，则 $\lim_{x \to 0} f(x) =$ \score{4}
+    \begin{answer}
+         解：根据重要极限可知 $\lim_{x \to 0} \frac{\sin x}{x} = 1$。故选 A。
+    \end{answer}
+
+  \item 设 $y = x^2$，则其导数 $y' =$ \score{4}
+    \begin{answer}
+        解：$y' = 2x$。
+    \end{answer}
+  \end{enumerate}
+}
+
+\problem{共30分}{计算题}{解答应写出文字说明、证明过程或演算步骤。
+  \begin{enumerate}
+    \item 计算定积分 $\int_a^b x^2 dx$.
+
+    \begin{answer}
+      第一步是求出原函数为 $\frac{1}{3}x^3$ \score{6}
+      第二步带入牛顿-莱布尼茨公式上下限得出最终结果 \score{4}
+    \end{answer}
+  \end{enumerate}
+}
+  
+% 5. 生成所有大题 
+\generateProblemTable
+
+\end{document}
